@@ -41,8 +41,7 @@ func PresentHandler() http.Handler {
 		provider, err := dns.NewDNSChallengeProviderByName("gcloud")
 
 		if err != nil {
-			//TODO error handling
-			fmt.Printf("could not get gcloud provider: %v", err)
+			http.Error(w, fmt.Sprintf("could not get gcloud provider: %v", err), http.StatusServiceUnavailable)
 		}
 
 		req, err := getDNSReq(r.Body)
@@ -52,8 +51,7 @@ func PresentHandler() http.Handler {
 
 		err = provider.Present(req.Domain, req.Token, req.KeyAuth)
 		if err != nil {
-			//TODO error handling
-			fmt.Printf("present req failed: %v", err)
+			http.Error(w, fmt.Sprintf("present req failed: %v", err), http.StatusServiceUnavailable)
 		}
 
 		return
@@ -69,8 +67,7 @@ func CleanupHandler() http.Handler {
 
 		provider, err := dns.NewDNSChallengeProviderByName("gcloud")
 		if err != nil {
-			//TODO error handling
-			fmt.Printf("could not get gcloud provider: %v", err)
+			http.Error(w, fmt.Sprintf("could not get gcloud provider: %v", err), http.StatusServiceUnavailable)
 		}
 
 		req, err := getDNSReq(r.Body)
@@ -80,8 +77,7 @@ func CleanupHandler() http.Handler {
 
 		err = provider.CleanUp(req.Domain, req.Token, req.KeyAuth)
 		if err != nil {
-			//TODO error handling
-			fmt.Printf("present req failed: %v", err)
+			http.Error(w, fmt.Sprintf("present req failed: %v", err), http.StatusServiceUnavailable)
 		}
 
 		return
