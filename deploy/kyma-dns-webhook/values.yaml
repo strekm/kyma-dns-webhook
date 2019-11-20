@@ -1,0 +1,16 @@
+groupName: acme.kyma-project.io
+
+image:
+  repository: piotrmsc/webhook
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 443
+
+nameOverride: ""
+fullnameOverride: ""
+
+certManager:
+  namespace: istio-system
+  serviceAccountName: cert-manager
