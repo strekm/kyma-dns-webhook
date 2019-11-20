@@ -10,24 +10,22 @@ The Kyma DNS Webhook is a component that can be used with [Cert Manager](https:/
  ## Sample Issuer and Cert CR for cert-manager
  
  ```
-apiVersion: certmanager.k8s.io/v1alpha1
-kind: Issuer
-metadata:
-  name: letsencrypt-staging
-spec:
-  acme:
-    email: admin@kyma-project.io
-    server: https://acme-staging-v02.api.letsencrypt.org/directory
-    privateKeySecretRef:
-      name: letsencrypt-staging-account-key
-    dns01:
-      providers:
-        - name: kyma-dns
-          webhook:
-            groupName: acme.kyma-project.io
-            solverName: kyma-dns
-            
-
+ apiVersion: certmanager.k8s.io/v1alpha1
+  kind: Issuer
+  metadata:
+    name: letsencrypt-staging
+  spec:
+    acme:
+      email: admin@kyma-project.io
+      server: https://acme-staging-v02.api.letsencrypt.org/directory
+      privateKeySecretRef:
+        name: letsencrypt-staging-account-key
+      dns01:
+        providers:
+          - name: kyma-dns
+            webhook:
+              groupName: acme.kyma-project.io
+              solverName: kyma-dns
                            
 ```                
 
@@ -35,10 +33,9 @@ spec:
 apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
-  name: sel-letsencrypt-crt
-  namespace: default
+  name: letsencrypt-staging-cert  
 spec:
-  secretName: example-com-tls
+  secretName: example-tls-cert
   commonName: example.com
   dnsNames:
   - example.com
@@ -49,15 +46,8 @@ spec:
   acme:
     config:
       - dns01:
-          provider: kymsa-dns
+          provider: kyma-dns
         domains:
-          - example.com
-          - www.example.com
+          - *.example.com
           
 ```
-
-## Installation
-
-Helm charts are available in `deploy ` directory. Execute following command to install webhook on a cluster:
-
-``` helm install --namespace cert-manager ./deploy/kyma-dns-webhook  --name kyma-dns-webhook --namespace istio-system  ```
