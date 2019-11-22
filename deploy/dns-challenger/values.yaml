@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: nginx
-  tag: stable
+  repository: madziq/dns-challenger
+  tag: latest
   pullPolicy: IfNotPresent
 
 nameOverride: ""
@@ -46,3 +46,8 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+gcloud:
+  providerName: "gcloud"
+  # base64 GCP Service Account JSON key with DNS Admin role
+  saJSON: ""
