@@ -4,7 +4,7 @@ The Kyma DNS Webhook is a component that can be used with [Cert Manager](https:/
 
 ## DNS Challenger
 
-DNS challenger is a component responsible for doing DNS challenges in GCP.
+DNS Challenger is a component responsible for performing DNS challenges in GCP.
 
 ### Build DNS Challenger
 
